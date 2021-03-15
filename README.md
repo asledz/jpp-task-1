@@ -1,8 +1,3 @@
----
-header-includes:
-  - \usepackage{a4wide}
----
-
 # JPP 2020/21 --- Program zaliczeniowy (Haskell)
 
 ## A. Zbiory
