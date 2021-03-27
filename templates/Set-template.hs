@@ -22,6 +22,7 @@ toList :: Set a -> [a]
 toAscList :: Ord a => Set a -> [a]
 
 elems :: Set a -> [a]
+elems = toList
 
 union :: Set a -> Set a -> Set a
 

@@ -29,6 +29,8 @@ main = do
        quickCheck rightUnit
        writeln "idempotent"
        quickCheck unionIdempotent
+       writeln "commutative"
+       quickCheck unionCommutative
        writeln "assoc"
        quickCheck assoc
        writeln "reasonable"

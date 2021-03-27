@@ -11,6 +11,7 @@ rightUnit a = a * empty == a
 
 connectAssociative :: Relation Int -> Relation Int -> Relation Int -> Bool
 connectAssociative x y z = (x * y) * z == x * (y * z)
+
 unionCommutative :: Relation Int -> Relation Int -> Bool
 unionCommutative a b = a + b == b + a
 
@@ -30,6 +31,8 @@ main = do
        quickCheck rightUnit
        writeln "connect associative"
        quickCheck connectAssociative
+       writeln "commutative"
+       quickCheck unionCommutative
        writeln "union associative"
        quickCheck unionAssociative
        writeln "distributive"
