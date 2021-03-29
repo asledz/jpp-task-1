@@ -1,5 +1,5 @@
 module Set(Set(..), empty, null, singleton, union, fromList
-              , member, toList, toAscList, elems
+              , member, toList, toAscList, elems, insert, deleteDuplicates
               ) where
 import Prelude hiding(null)
 import Data.List (sort)
@@ -30,8 +30,7 @@ fromList l = fromList' l Empty
 
 fromList' :: [a] -> Set a -> Set a
 fromList' [] set = set
-fromLits' (h:t) set = fromList' t (insert h set)
-
+fromList' (h:t) set = fromList' t (insert h set)
 
 toList :: Set a -> [a]
 toList set = toList' set []
@@ -42,10 +41,10 @@ toList' (Singleton a) list = a:list
 toList' (Union x y) list = toList' y (toList' x list)
 
 toAscList :: Ord a => Set a -> [a]
-toAscList set = deleteDuplicates (sort (toList set))
+toAscList set = reverse (deleteDuplicates (sort (toList set)))
 
 deleteDuplicates :: Ord a => [a] -> [a]
-deleteDuplicates (h:t) = reverse (deleteDuplicates' h t [h])
+deleteDuplicates (h:t) = deleteDuplicates' h t [h]
 deleteDuplicates [] = []
 
 deleteDuplicates' :: Ord a => a -> [a] -> [a] -> [a]
@@ -59,6 +58,7 @@ elems = toList
 
 union :: Set a -> Set a -> Set a
 -- union with an empty set
+union Empty Empty = Empty
 union set Empty = set
 union Empty set = set
 -- union with singleton
@@ -79,13 +79,11 @@ instance Ord a => Eq (Set a) where
     _ == Empty = False 
     -- Singleton set
     Singleton a == Singleton b = a == b
-    Singleton a == _ = False 
-    _ == Singleton a = False
     -- Union set
     set1 == set2 = toAscList set1 == toAscList set2
 
 instance Semigroup (Set a) where
-   s1 <> s2 = union s1 s2
+    s1 <> s2 = union s1 s2
 
 instance Monoid (Set a) where
     mempty = empty
